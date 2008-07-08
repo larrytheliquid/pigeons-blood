@@ -20,12 +20,12 @@ describe Kernel, "#is_defined?" do
       is_defined?(binding) { super }
     end
     def args
-      is_defined?(binding) {  super()  }
+      is_defined?(binding) { super() }
     end
   end
 
   module A
-    self::FOO = 'x' unless defined? self::FOO rescue nil
+    self::FOO = 'x' unless is_defined?(binding) { self::FOO } rescue nil
   end
   
   it "returns 'method' when is_defined?(binding) { exit } is sent" do
