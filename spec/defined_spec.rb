@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe "is_defined?(binding)" do
+describe Kernel, "#is_defined?" do
   class LanguageDefinedSpecs
     SomeConst = 5
 
