@@ -1,5 +1,5 @@
 module PigeonsBlood
-  def define_class(binding, name, &block)
-    eval %{class #{name}; end}, binding
+  def define_class(name, &block)
+    eval %{class #{name}; end}, block
   end
 end

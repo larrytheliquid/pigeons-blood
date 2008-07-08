@@ -1,5 +1,5 @@
 module ClassSpecs
-  define_class binding, :A
+  define_class(:A) {}
   
   class B
     @@cvar = :cvar

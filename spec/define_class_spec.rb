@@ -19,24 +19,24 @@ describe "A class definition" do
 
   it "raises TypeError if constant given as class name exists and is not a Module" do
     lambda {
-      define_class binding, :ClassSpecsNumber
+      define_class(:ClassSpecsNumber) {}
     }.should raise_error(TypeError)
   end
 
   # test case known to be detecting bugs (JRuby, MRI 1.9)
   it "raises TypeError if the constant qualifying the class is nil" do
     lambda {
-      define_class binding, 'nil::Foo'
+      define_class('nil::Foo') {}
     }.should raise_error(TypeError)
   end
 
   it "raises TypeError if any constant qualifying the class is not a Module" do
     lambda {
-      define_class binding, 'ClassSpecs::Number::MyClass'
+      define_class('ClassSpecs::Number::MyClass') {}
     }.should raise_error(TypeError)
 
     lambda {
-      define_class binding, 'ClassSpecsNumber::MyClass'
+      define_class('ClassSpecsNumber::MyClass') {}
     }.should raise_error(TypeError)
   end
   
