@@ -1,3 +1,4 @@
 require 'rubygems'
 require 'ruby2ruby'
-require File.dirname(__FILE__) + '/../lib/rhinestone'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'pigeons_blood')
+include PigeonsBlood
