@@ -26,20 +26,17 @@ describe "A class definition" do
   # test case known to be detecting bugs (JRuby, MRI 1.9)
   it "raises TypeError if the constant qualifying the class is nil" do
     lambda {
-      class nil::Foo
-      end
+      define_class binding, 'nil::Foo'
     }.should raise_error(TypeError)
   end
 
   it "raises TypeError if any constant qualifying the class is not a Module" do
     lambda {
-      class ClassSpecs::Number::MyClass
-      end
+      define_class binding, 'ClassSpecs::Number::MyClass'
     }.should raise_error(TypeError)
 
     lambda {
-      class ClassSpecsNumber::MyClass
-      end
+      define_class binding, 'ClassSpecsNumber::MyClass'
     }.should raise_error(TypeError)
   end
   
