@@ -49,8 +49,6 @@ module ClassSpecs
   class!(:Container) do    
     class!(:A) {}
     class!(:B) {}    
-    # class A; end
-    # class B; end
   end
 
   O = Object.new
