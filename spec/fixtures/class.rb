@@ -1,12 +1,12 @@
 module ClassSpecs
-  define_class(:A) {}
+  class!(:A) {}
   
-  define_class(:B) do
+  class!(:B) do
     @@cvar = :cvar
     @ivar = :ivar
   end
   
-  define_class(:C) do
+  class!(:C) do
     def self.make_class_variable
       @@cvar = :cvar
     end
@@ -16,13 +16,13 @@ module ClassSpecs
     end
   end
   
-  define_class(:D) do
+  class!(:D) do
     def make_class_variable
       @@cvar = :cvar
     end
   end
   
-  define_class(:E) do
+  class!(:E) do
     def self.cmeth() :cmeth end
     def meth() :meth end
     
@@ -33,22 +33,22 @@ module ClassSpecs
     CONSTANT = :constant!
   end
   
-  define_class(:F) {}
-  define_class(:F) do
+  class!(:F) {}
+  class!(:F) do
     def meth() :meth end
   end
-  define_class(:F) do
+  class!(:F) do
     def another() :another end
   end
   
-  define_class(:G) do
+  class!(:G) do
     def override() :nothing end
     def override() :override end
   end
   
-  define_class(:Container) do    
-    define_class(:A) {}
-    define_class(:B) {}    
+  class!(:Container) do    
+    class!(:A) {}
+    class!(:B) {}    
     # class A; end
     # class B; end
   end
@@ -60,7 +60,7 @@ module ClassSpecs
     end
   end
   
-  define_class(:H) do
+  class!(:H) do
     def self.inherited(sub)
       track_inherited << sub
     end
@@ -70,9 +70,9 @@ module ClassSpecs
     end
   end
   
-  define_class(:K, :H) {}
+  class!(:K, :H) {}
   
-  define_class(:I) do    
-    define_class(:J, :self) {}
+  class!(:I) do    
+    class!(:J, :self) {}
   end
 end

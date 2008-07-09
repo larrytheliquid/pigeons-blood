@@ -6,7 +6,7 @@ module PigeonsBlood
     eval "defined? #{proc_to_ruby(block)}", block
   end
   
-  def define_class(name, parent=nil, &block)
+  def class!(name, parent=nil, &block)
     eval %{class #{name}#{" < #{parent}" if parent}
             #{proc_to_ruby(block)}
           end}, block
