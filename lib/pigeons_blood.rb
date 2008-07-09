@@ -13,7 +13,7 @@ module PigeonsBlood
   end
   
   def def!(name, *arguments, &block)
-    eval %{def #{name}(#{arguments.join(", ")})
+    eval %{def #{name}(#{arguments.map{|argument| parse_argument(argument) }.join(", ")})
             #{proc_contents_string(block)}
           end}, block
   end
@@ -22,5 +22,17 @@ private
 
   def proc_contents_string(proc)
     proc.to_ruby.sub(/^proc \{/, '').chomp('}')
+  end
+  
+  def parse_argument(argument)
+    case argument
+    when Array
+      case argument.first.to_s
+      when '*', '&' then argument.join
+      else argument.reverse.join("=")
+      end
+    else
+      argument
+    end
   end
 end

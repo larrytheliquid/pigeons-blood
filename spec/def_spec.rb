@@ -39,7 +39,7 @@ describe "An instance method definition with a splat" do
   end
 
   it "accepts a named * argument" do
-    def!(:foo, '*a') { a }
+    def!(:foo, [:*, :a]) { a }
     foo.should == []
     foo(1, 2).should == [1, 2]
     foo([:a]).should == [[:a]]
