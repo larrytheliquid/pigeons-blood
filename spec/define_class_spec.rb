@@ -54,6 +54,7 @@ describe "A class definition" do
 #  end
 
   it "allows the declaration of class variables in the body" do
+    pending "class variables"
     ClassSpecs::B.class_variables.should == ["@@cvar"]
     ClassSpecs::B.send(:class_variable_get, :@@cvar).should == :cvar
   end
@@ -64,6 +65,7 @@ describe "A class definition" do
   end
 
   it "allows the declaration of class variables in a class method" do
+    pending "class variables"
     ClassSpecs::C.class_variables.should == []
     ClassSpecs::C.make_class_variable
     ClassSpecs::C.class_variables.should == ["@@cvar"]
@@ -76,6 +78,7 @@ describe "A class definition" do
   end
   
   it "allows the declaration of class variables in an instance method" do
+    pending "class variables"
     ClassSpecs::D.class_variables.should == []
     ClassSpecs::D.new.make_class_variable
     ClassSpecs::D.class_variables.should == ["@@cvar"]

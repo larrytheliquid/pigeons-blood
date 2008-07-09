@@ -1,12 +1,12 @@
 module ClassSpecs
   define_class(:A) {}
   
-  class B
+  define_class(:B) do
     @@cvar = :cvar
     @ivar = :ivar
   end
   
-  class C
+  define_class(:C) do
     def self.make_class_variable
       @@cvar = :cvar
     end
@@ -16,13 +16,13 @@ module ClassSpecs
     end
   end
   
-  class D
+  define_class(:D) do
     def make_class_variable
       @@cvar = :cvar
     end
   end
   
-  class E
+  define_class(:E) do
     def self.cmeth() :cmeth end
     def meth() :meth end
     
