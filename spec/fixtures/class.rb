@@ -47,8 +47,10 @@ module ClassSpecs
   end
   
   define_class(:Container) do    
-    class A; end
-    class B; end
+    define_class(:A) {}
+    define_class(:B) {}    
+    # class A; end
+    # class B; end
   end
 
   O = Object.new
@@ -71,7 +73,6 @@ module ClassSpecs
   define_class(:K, :H) {}
   
   define_class(:I) do    
-    class J < self 
-    end
+    define_class(:J, :self) {}
   end
 end
