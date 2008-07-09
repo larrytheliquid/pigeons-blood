@@ -15,6 +15,6 @@ module PigeonsBlood
 private
 
   def proc_to_ruby(proc)
-    proc.to_ruby.sub(/^proc \{/, '').sub(/\}$/, '')
+    proc.to_ruby.sub(/^proc \{/, '').chomp('}')
   end
 end
