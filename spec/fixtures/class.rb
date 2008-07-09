@@ -33,20 +33,20 @@ module ClassSpecs
     CONSTANT = :constant!
   end
   
-  class F; end
-  class F
+  define_class(:F) {}
+  define_class(:F) do
     def meth() :meth end
   end
-  class F
+  define_class(:F) do
     def another() :another end
   end
   
-  class G
+  define_class(:G) do
     def override() :nothing end
     def override() :override end
   end
   
-  class Container
+  define_class(:Container) do    
     class A; end
     class B; end
   end
@@ -58,7 +58,7 @@ module ClassSpecs
     end
   end
   
-  class H
+  define_class(:H) do
     def self.inherited(sub)
       track_inherited << sub
     end
@@ -68,9 +68,9 @@ module ClassSpecs
     end
   end
   
-  class K < H; end
+  define_class(:K, :H) {}
   
-  class I
+  define_class(:I) do    
     class J < self 
     end
   end

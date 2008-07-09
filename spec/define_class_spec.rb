@@ -54,7 +54,6 @@ describe "A class definition" do
 #  end
 
   it "allows the declaration of class variables in the body" do
-    pending "class variables"
     ClassSpecs::B.class_variables.should == ["@@cvar"]
     ClassSpecs::B.send(:class_variable_get, :@@cvar).should == :cvar
   end
@@ -65,7 +64,6 @@ describe "A class definition" do
   end
 
   it "allows the declaration of class variables in a class method" do
-    pending "class variables"
     ClassSpecs::C.class_variables.should == []
     ClassSpecs::C.make_class_variable
     ClassSpecs::C.class_variables.should == ["@@cvar"]
@@ -78,7 +76,6 @@ describe "A class definition" do
   end
   
   it "allows the declaration of class variables in an instance method" do
-    pending "class variables"
     ClassSpecs::D.class_variables.should == []
     ClassSpecs::D.new.make_class_variable
     ClassSpecs::D.class_variables.should == ["@@cvar"]
@@ -103,10 +100,10 @@ describe "A class definition" do
   end
   
   it "returns the value of the last statement in the body" do
-    class ClassSpecs::Empty; end.should == nil
-    class ClassSpecs::Twenty; 20; end.should == 20
-    class ClassSpecs::Plus; 10 + 20; end.should == 30
-    class ClassSpecs::Singleton; class << self; :singleton; end; end.should == :singleton
+    define_class('ClassSpecs::Empty') {}.should == nil
+    define_class('ClassSpecs::Twenty') { 20 }.should == 20
+    define_class('ClassSpecs::Plus') { 10 + 20 }.should == 30    
+    define_class('ClassSpecs::Singleton') { class << self; :singleton; end }.should == :singleton
   end
 end
 
@@ -146,7 +143,7 @@ describe "Reopening a class" do
   end
   
   it "raises a TypeError when superclasses mismatch" do
-    lambda { class ClassSpecs::A < Array; end }.should raise_error(TypeError)
+    lambda { define_class('ClassSpecs::A', 'Array') {} }.should raise_error(TypeError)
   end
 end
 
