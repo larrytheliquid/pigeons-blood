@@ -12,6 +12,12 @@ module PigeonsBlood
           end}, block
   end
   
+  def def!(name, *arguments, &block)
+    eval %{def #{name}(#{arguments.join(", ")})
+            #{proc_contents_string(block)}
+          end}, block
+  end
+  
 private
 
   def proc_contents_string(proc)
