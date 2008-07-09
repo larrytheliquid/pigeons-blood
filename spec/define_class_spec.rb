@@ -44,7 +44,7 @@ describe "A class definition" do
     ClassSpecs::I::J.superclass.should == ClassSpecs::I
     
     lambda {
-      class ShouldNotWork < self; end
+      define_class(:ShouldNotWork, :self) {}      
     }.should raise_error(TypeError)
   end
   
