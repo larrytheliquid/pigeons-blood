@@ -26,17 +26,17 @@ describe "A class definition" do
   # test case known to be detecting bugs (JRuby, MRI 1.9)
   it "raises TypeError if the constant qualifying the class is nil" do
     lambda {
-      class!('nil::Foo') {}
+      class!([:nil, :Foo]) {}
     }.should raise_error(TypeError)
   end
 
   it "raises TypeError if any constant qualifying the class is not a Module" do
     lambda {
-      class!('ClassSpecs::Number::MyClass') {}
+      class!([:ClassSpecs, :Number, :MyClass]) {}
     }.should raise_error(TypeError)
 
     lambda {
-      class!('ClassSpecsNumber::MyClass') {}
+      class!([:ClassSpecsNumber, :MyClass]) {}
     }.should raise_error(TypeError)
   end
   
@@ -100,10 +100,10 @@ describe "A class definition" do
   end
   
   it "returns the value of the last statement in the body" do
-    class!('ClassSpecs::Empty') {}.should == nil
-    class!('ClassSpecs::Twenty') { 20 }.should == 20
-    class!('ClassSpecs::Plus') { 10 + 20 }.should == 30    
-    class!('ClassSpecs::Singleton') { class << self; :singleton; end }.should == :singleton
+    class!([:ClassSpecs, :Empty]) {}.should == nil
+    class!([:ClassSpecs, :Twenty]) { 20 }.should == 20
+    class!([:ClassSpecs, :Plus]) { 10 + 20 }.should == 30    
+    class!([:ClassSpecs, :Singleton]) { class << self; :singleton; end }.should == :singleton
   end
 end
 
@@ -143,7 +143,7 @@ describe "Reopening a class" do
   end
   
   it "raises a TypeError when superclasses mismatch" do
-    lambda { class!('ClassSpecs::A', 'Array') {} }.should raise_error(TypeError)
+    lambda { class!([:ClassSpecs, :A], :Array) {} }.should raise_error(TypeError)
   end
 end
 
