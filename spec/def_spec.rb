@@ -46,12 +46,12 @@ describe "An instance method definition with a splat" do
   end
 
   it "accepts non-* arguments before the * argument" do
-    def foo(a, b, c, d, e, *f); [a, b, c, d, e, f]; end
+    def!(:foo, :a, :b, :c, :d, :e, [:*, :f]) { [a, b, c, d, e, f] }
     foo(1, 2, 3, 4, 5, 6, 7, 8).should == [1, 2, 3, 4, 5, [6, 7, 8]]
   end
 
   it "creates a method that can be invoked with an inline hash argument" do
-    def foo(a,b,*c); [a,b,c] end
+    def!(:foo, :a, :b, [:*, :c]) { [a,b,c] }
 
     foo('abc', 'rbx' => 'cool', 'specs' => 'fail sometimes', 'oh' => 'shit', *[789, 'yeah']).
       should ==
@@ -59,7 +59,7 @@ describe "An instance method definition with a splat" do
   end
 
   it "creates a method that can be invoked with an inline hash and a block" do
-    def foo(a,b,*c,&d); [a,b,c,yield(d)] end
+    def!(:foo, :a, :b, [:*, :c] , [:&, :d]) { [a,b,c,yield(d)] }
 
     foo('abc', 'rbx' => 'cool', 'specs' => 'fail sometimes', 'oh' => 'shit', *[789, 'yeah']) { 3 }.
       should ==
@@ -75,18 +75,18 @@ describe "An instance method definition with a splat" do
   end
 
   it "allows only a single * argument" do
-    lambda { eval 'def foo(a, *b, *c); end' }.should raise_error(SyntaxError)
+    lambda { eval 'def!(:foo, :a, [:*, :b], [:*, :c]) {}' }.should raise_error(SyntaxError)
   end
 
   it "requires the presence of any arguments that precede the *" do
-    def foo(a, b, *c); end
+    def!(:foo, :a, :b, [:*, :c]) {}
     lambda { foo 1 }.should raise_error(ArgumentError)
   end
 end
 
 describe "An instance method with a default argument" do
   it "evaluates the default when no arguments are passed" do
-    def foo(a = 1)
+    def!(:foo, [:a, '1']) do
       a
     end
     foo.should == 1
@@ -94,7 +94,7 @@ describe "An instance method with a default argument" do
   end
 
   it "assigns an empty Array to an unused splat argument" do
-    def foo(a = 1, *b)
+    def!(:foo, [:a, '1'], [:*, :b]) do
       [a,b]
     end
     foo.should == [1, []]
@@ -102,7 +102,7 @@ describe "An instance method with a default argument" do
   end
 
   it "evaluates the default when required arguments precede it" do
-    def foo(a, b = 2)
+    def!(:foo, :a, [:b, '2']) do
       [a,b]
     end
     lambda { foo }.should raise_error(ArgumentError)
@@ -110,7 +110,7 @@ describe "An instance method with a default argument" do
   end
 
   it "prefers to assign to a default argument before a splat argument" do
-    def foo(a, b = 2, *c)
+    def!(:foo, :a, [:b, '2'], [:*, :c]) do
       [a,b,c]
     end
     lambda { foo }.should raise_error(ArgumentError)
@@ -118,7 +118,7 @@ describe "An instance method with a default argument" do
   end
 
   it "prefers to assign to a default argument when there are no required arguments" do
-    def foo(a = 1, *args)
+    def!(:foo, [:a, '1'], [:*, :args]) do
       [a,args]
     end
     foo(2,2).should == [2,[2]]

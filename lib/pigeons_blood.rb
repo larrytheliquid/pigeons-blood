@@ -7,13 +7,13 @@ module PigeonsBlood
   end
   
   def class!(name, parent=nil, &block)
-    eval %{class #{parse_class_argument(name)}#{" < #{parse_class_argument(parent)}" if parent}
+    eval %{class #{parse_class_name(name)}#{" < #{parse_class_name(parent)}" if parent}
             #{proc_contents_string(block)}
           end}, block
   end
   
   def def!(name, *arguments, &block)
-    eval %{def #{name}(#{arguments.map{|argument| parse_def_argument(argument) }.join(", ")})
+    eval %{def #{parse_def_name(name)}(#{arguments.map{|argument| parse_def_argument(argument) }.join(", ")})
             #{proc_contents_string(block)}
           end}, block
   end
@@ -24,10 +24,17 @@ private
     proc.to_ruby.sub(/^proc \{/, '').chomp('}')
   end
   
-  def parse_class_argument(argument)
-    case argument
-    when Array then argument.join('::')
-    else argument
+  def parse_class_name(name)
+    case name
+    when Array then name.join('::')
+    else name
+    end
+  end
+  
+  def parse_def_name(name)
+    case name
+    when Array then name.join('.')
+    else name
     end
   end
   
@@ -36,7 +43,7 @@ private
     when Array
       case argument.first.to_sym
       when :*, :& then argument.join
-      else argument.reverse.join('=')
+      else argument.join('=')
       end
     else
       argument
