@@ -20,8 +20,21 @@ module PigeonsBlood
   
 private
 
+  def unify(sexp)
+    Unifier.new.process(sexp)
+  end
+
   def proc_contents(proc)
-    proc.to_ruby.sub(/^proc \{/, '').chomp('}')
+    #   >> lambda { |x| x + 2 }.to_sexp
+    #   => [:iter, [:fcall, :proc], [:dasgn_curr, :x], [:call, [:dvar, :x], :+, [:array, [:lit, 2]]]]
+    iter, fcall, local_assigns, body = unify(proc.to_sexp)
+    ruby2ruby = Ruby2Ruby.new
+
+    if local_assigns
+      "|#{ruby2ruby.process(local_assigns)}| #{ruby2ruby.process(body)}"
+    else
+      ruby2ruby.process(body)
+    end
   end
   
   def parse_class_name(name)
