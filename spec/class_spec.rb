@@ -122,7 +122,7 @@ describe "A Class Definitions extending an object" do
     lambda {
       eval <<-CODE
         class << 1
-          def xyz
+          def!(:xyz) do
             self
           end
         end
