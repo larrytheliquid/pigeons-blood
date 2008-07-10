@@ -27,7 +27,7 @@ module ClassSpecs
     def!(:meth) {:meth}
     
     class << self
-      def smeth; :smeth; end
+      def!(:smeth) {:smeth}
     end
     
     CONSTANT = :constant!
